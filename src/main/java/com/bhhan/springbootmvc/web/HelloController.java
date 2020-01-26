@@ -24,6 +24,33 @@ import java.util.List;
 @SessionAttributes("event")
 public class HelloController {
 
+    /*@ExceptionHandler({EventException.class, RuntimeException.class})
+    public String eventErrorHandler(RuntimeException exception, Model model){
+        model.addAttribute("message", "runtime error");
+        return "error";
+    }
+
+    @InitBinder
+    public void initEventBinder(WebDataBinder webDataBinder){
+        webDataBinder.setDisallowedFields("id");
+        webDataBinder.addValidators(new EventValidator());
+    }
+
+    @ModelAttribute
+    public void categories(Model model){
+        model.addAttribute("subjects", Arrays.asList("Study", "Seminar"));
+    }
+
+    @ModelAttribute("categories")
+    public List<String> categories2(){
+        return Arrays.asList("Study", "Seminar");
+    }*/
+
+    @GetMapping("/goError")
+    public String goError(){
+        throw new EventException();
+    }
+
     @GetMapping("/event/form/name")
     public String eventFormName(Model model){
         model.addAttribute("event", new Event());

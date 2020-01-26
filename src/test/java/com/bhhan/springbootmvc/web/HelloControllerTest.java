@@ -3,7 +3,6 @@ package com.bhhan.springbootmvc.web;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.filter.TypeExcludeFilters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -15,7 +14,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -103,6 +103,8 @@ class HelloControllerTest {
                 .flashAttr("name", "bhhan")
                 .flashAttr("limit", 1234))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("categories", "subjects"))
+                .andExpect(xpath("//p").nodeCount(2));
     }
 }
